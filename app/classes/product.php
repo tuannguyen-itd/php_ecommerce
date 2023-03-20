@@ -104,7 +104,7 @@ class Product{
         global $connection;
         $sql_product = 'INSERT INTO products(product_name, product_import_price, product_price, product_promotion_price, product_quantity, product_image_1, product_image_2, product_image_3, product_description, category_id) VALUES(?,?,?,?,?,?,?,?,?,?)';
         $stmt_product = $connection->prepare($sql_product);
-        $stmt_product->bind_param('s', $product_name);
+        $stmt_product->bind_param('siiiissssi', $product_name, $product_import_price, $product_price, $product_promotion_price, $product_quantity, $product_image_1, $product_image_2, $product_image_3, $product_description, $category_id);
         if($stmt_product->execute()){
             return 'add product success';
         } else{
@@ -128,7 +128,7 @@ class Product{
         global $connection;
         $sql_update_product = 'UPDATE products SET product_name = ?, product_import_price = ?, product_price = ?, product_promotion_price = ?, product_quantity = ?, product_image_1 = ?, product_image_2 = ?, product_image_3 = ?, product_description = ?, category_id = ? WHERE product_id = ?';
         $stmt_update_product = $connection->prepare($sql_update_product);
-        $stmt_update_product->bind_param('siiiiissssi', $product_name, $product_import_price, $product_price, $product_promotion_price, $product_quantity, $product_image_1, $product_image_2, $product_image_3, $product_description, $category_id, $product_id);
+        $stmt_update_product->bind_param('siiiissssii', $product_name, $product_import_price, $product_price, $product_promotion_price, $product_quantity, $product_image_1, $product_image_2, $product_image_3, $product_description, $category_id, $product_id);
         if($stmt_update_product->execute()){
             return 'Upload success';
         } else{

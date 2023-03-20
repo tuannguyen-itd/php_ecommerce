@@ -62,9 +62,16 @@
                                                     <tr>
                                                         <th scope="row"><?php echo ++$index; ?></th>
                                                         <td><?php echo $product['product_name'];?></td>
-                                                        <td><?php echo $product['product_price'];?></td>
+                                                        <td>
+                                                            <span class="text-nowrap">Giá nhập: <p class="text-dark"><?php echo $product['product_import_price'];?>đ</p></span> 
+                                                            <span class="text-nowrap">Giá bán: <p class="text-primary"><?php echo $product['product_price'];?>đ</p></span>   
+                                                        </td>
                                                         <td><?php echo $product['product_quantity'];?></td>
-                                                        <td><?php echo $product['product_image'];?></td>
+                                                        <td>
+                                                            <img src="../../public/images/<?php echo $product['product_image_1'];?>" alt="<?php echo $product['product_image_1'];?>" style="width:100px; height:50px;">
+                                                            <img src="../../app/public/images/<?php echo $product['product_image_2'];?>" alt="<?php echo $product['product_image_2'];?>" style="width:100px; height:50px;">
+                                                            <img src="/public/images/<?php echo $product['product_image_3'];?>" alt="<?php echo $product['product_image_3'];?>" style="width:100px; height:50px;">
+                                                            </td>
                                                         <td><?php echo $product['product_description'];?></td>
                                                         <td>
                                                             <button type="button" class="btn mr-2 mb-2 btn-warning" data-toggle="modal" data-target="#exampleModalUpdate<?php echo $product['product_id']?>">
@@ -245,10 +252,81 @@
                 <h6>
                 </h6>
                     <form id="update-form">
-                        <div class="position-relative form-group">
-                            <input name="product_id" value="<?php echo $product['product_id']?>" placeholder="Enter product name" type="hidden" class="form-control">
-                            <input name="product_name" value="<?php echo $product['product_name']?>" placeholder="Enter product name" type="text" class="form-control">
+                    <div class="row">
+                            <div class="col-md-4">
+                                <div class="position-relative form-group">
+                                    <label for="exampleEmail" class="">Product name</label>
+                                    <input name="product_name" placeholder="Enter product name" type="text" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="position-relative form-group">
+                                    <label for="exampleEmail" class="">Product quantity</label>
+                                    <input name="product_quantity" min="1" placeholder="Enter product quantity" type="number" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="position-relative form-group">
+                                    <label for="exampleSelect" class="">Category</label>
+                                    <select name="category_id" id="exampleSelect" class="form-control">
+                                    <?php $sql = "SELECT * FROM categories";
+                                        $result = $connection->query($sql);
+                                        $categories = array();
+                                        if ($result->num_rows > 0) {
+                                            while ($row = $result->fetch_assoc()) {
+                                                $categories[] = $row;
+                                            }
+                                        }            
+                                        foreach($categories as $index => $category){?>
+                                            <option value="<?php echo $category['category_id']?>"><?php echo $category['category_name']?></option>
+                                        <?php } ?>
+                                    </select>
+                                </div>
+                            </div>
                         </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="position-relative form-group">
+                                    <label for="exampleEmail" class="">Product import price</label>
+                                    <input name="product_import_price" placeholder="Enter price" min="1000" type="number" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="position-relative form-group">
+                                    <label for="exampleEmail" class="">Product price</label>
+                                    <input name="product_price" placeholder="Enter price" min="1000" type="number" class="form-control">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="position-relative form-group">
+                                    <label for="exampleEmail" class="">Product image</label>
+                                    <input name="product_image_1" placeholder="Enter image 1" type="file" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="position-relative form-group">
+                                    <label for="exampleEmail" class="">Product image</label>
+                                    <input name="product_image_2" placeholder="Enter price" type="file" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="position-relative form-group">
+                                    <label for="exampleEmail" class="">Product image</label>
+                                    <input name="product_image_3" placeholder="Enter price" type="file" class="form-control">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="position-relative form-group">
+                                    <label for="exampleEmail" class="">Product description</label><br>
+                                    <textarea name="product_description" id="" cols="60" rows="5"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                        
                         
                         <button type="submit" class="btn btn-warning" id="update-btn">Update</button>
                     </form>
